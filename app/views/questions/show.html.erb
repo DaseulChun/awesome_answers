@@ -7,21 +7,24 @@
         <li><%= msg %></li>
       <% end %>
     </ul>
-<% end %>
+  <% end %>
   
-<h1><%= @question.title %></h1>
-<p><%= @question.body %></p>
+  <h1><%= @question.title %></h1>
+  <p><%= @question.body %></p>
 
-<div class="form-group">
-  <%= f.text_area(
-  :body,
-  cols: 50,
-  rows: 5,
-  placeholder: "What are your thoughts?",
-  class: "form-control"
-  ) %>
-</div>
-<%= f.submit "Answer" %>
+  <%= link_to "Edit", edit_question_path(@question) %>
+  <%= link_to "Delete", question_path(@question), method: :delete, data: {confirm: "Are you sure?"} %>
+
+  <div class="form-group">
+    <%= f.text_area(
+    :body,
+    cols: 50,
+    rows: 5,
+    placeholder: "What are your thoughts?",
+    class: "form-control"
+    ) %>
+  </div>
+  <%= f.submit "Answer" %>
 <% end %>
 
 <hr />
@@ -52,6 +55,4 @@
    <% end %>
 </ul>
 
-<%= link_to "Edit", edit_question_path(@question) %>
-<%= link_to "Delete", question_path(@question), method: :delete, data: {confirm: "Are you sure?"} %>
 
