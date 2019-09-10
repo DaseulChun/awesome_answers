@@ -1,6 +1,8 @@
 class Question < ApplicationRecord
-
+  belongs_to :user
   has_many :answers, dependent: :destroy
+  
+
   # dependent option: 
   # 1) nullify : if question is deleted, question ID will be null, but answer will be left
   # 2) destroy : if question is deleted, all the answers will be deleted

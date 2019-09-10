@@ -1,6 +1,11 @@
 class QuestionsController < ApplicationController
 
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  # these two belows's ORDER DOES MATTER
+  # Coz authorize! method need @question args, which is coming from find_question method
+  # so find_question needs to executed first
   before_action :find_question, only: [:show, :edit, :update, :destroy]
+  before_action :authorize!, only: [:edit, :update, :destroy]
 
   # rails g controller questions new
   def new
@@ -8,9 +13,9 @@ class QuestionsController < ApplicationController
     render :new
   end
 
-
   def create
     @question = Question.new question_params
+    @question.user = current_user
 
     if @question.save
       flash[:notice] = "Question created successfully"
@@ -35,6 +40,7 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+    redirect_to root_path, alert: "Not Authorized" unless can?(:crud, @question)
   end
 
   def update
@@ -64,6 +70,10 @@ class QuestionsController < ApplicationController
   def find_question
     #this will get the current value inside of the db
     @question = Question.find params[:id]
+  end
+
+  def authorize!
+    redirect_to root_path, alert: 'Not Authorized' unless can?(:crud, @question)
   end
 
 end

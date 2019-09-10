@@ -10,9 +10,22 @@
   </head>
 
   <body>
+  <% flash.each do |type, message| %>
+    <div class="flash flash-<%= type %>">
+      <%= message %>
+    </div>
+  <% end %>
+
   <%# these alert the user %>
   <%= flash[:notice] || flash[:alert] %>
 
+  <% if user_signed_in? %>
+    Hello <%= current_user.full_name %>,
+    <%= link_to "Logout", sessions_path, method: :delete, data: {confirm: "Are you sure you want to log out?"} %>
+  <% else %>
+    <%= link_to "LogIn", new_session_path%>
+    <%= link_to "Sign Up", new_user_path%>
+  <% end %>
 
     <!-- <a href="/">Home</a> -->
     <%= link_to 'Home', root_path %>

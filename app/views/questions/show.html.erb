@@ -1,5 +1,14 @@
 <h3>Show Page</h3>
 
+<h1><%= @question.title %></h1>
+<p><%= @question.body %></p>
+<p>Asked by: <%= @question.user&.full_name || 'DELETED' %></p>
+
+<% if can?(:crud, @question) %>
+  <%= link_to "Edit", edit_question_path(@question) %>
+  <%= link_to "Delete", question_path(@question), method: :delete, data: {confirm: "Are you sure?"} %>
+<% end %>
+
 <%= form_with(model: [@question, @answer], local: true) do |f| %>
   <% if @answer.errors.any? %>
     <ul>
@@ -9,12 +18,6 @@
     </ul>
   <% end %>
   
-  <h1><%= @question.title %></h1>
-  <p><%= @question.body %></p>
-
-  <%= link_to "Edit", edit_question_path(@question) %>
-  <%= link_to "Delete", question_path(@question), method: :delete, data: {confirm: "Are you sure?"} %>
-
   <div class="form-group">
     <%= f.text_area(
     :body,
@@ -35,6 +38,7 @@
     <li>
       <p>
         <%= answer.body %> <br />
+        <% if can?(:crud, answer) %>
         <small>
           <%= link_to(
             "Delete",
@@ -46,8 +50,10 @@
           ) %>
         </small>
         |
+        <% end %>
+    
         <small>
-          Answered <%= time_ago_in_words(answer.created_at) %> ago
+          Answered by <%= answer.user&.full_name %><%= time_ago_in_words(answer.created_at) %> ago
         </small>
       </p>
     </li>

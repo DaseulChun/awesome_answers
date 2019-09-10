@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   get '/questions/new', {to: "questions#new", as: :new_question}
   #new_question_path, new_question_url
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -26,6 +27,14 @@ Rails.application.routes.draw do
     [:create, :destroy]
   end
 
+  # resource :session, only: [:new, :create, :destroy]
+
+  resources :users, only: [:new, :create]
+
+  resources :sessions, only: [:new, :create] do 
+    delete :destroy, on: :collection
+  end
+  
   # the above will generate the following two routes for answers:
   # question_answers POST/
   # questions:question_id//answers(.:format)
