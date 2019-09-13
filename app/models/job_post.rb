@@ -1,4 +1,8 @@
 class JobPost < ApplicationRecord
+  belongs_to :user #, optional: true
+  # belongs_to adds a presence validation to the user_id column
+  # optional: true removes this presence validations
+
   validates :title, presence: true, uniqueness: true
   validates :description, presence: true 
 

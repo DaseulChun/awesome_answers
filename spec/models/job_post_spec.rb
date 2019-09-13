@@ -50,7 +50,8 @@ RSpec.describe JobPost, type: :model do
       # Given
       # one job post in the db and a new instance of job post
       # with the same title
-      persisted_jp = JobPost.create(title: "Imagination Engineer", description: "Some valid description")
+      # persisted_jp = JobPost.create(title: "Imagination Engineer", description: "Some valid description")
+      persisted_jp = FactoryBot.create(:job_post, title: "Imagination Engineer")
       jp = JobPost.new(title: persisted_jp.title)
 
       # When
@@ -68,7 +69,8 @@ RSpec.describe JobPost, type: :model do
     it "should have a description" do
       # Given
       # An instance of a JobPost without a title
-      job_post =  JobPost.new
+      # job_post =  JobPost.new
+      job_post = FactoryBot.build(:job_post, description: nil)
       # When
       # Validations are triggered
       job_post.valid?
@@ -96,20 +98,27 @@ RSpec.describe JobPost, type: :model do
     it "should return job posts containing the search term" do
       # Given
       # 3 Job posts in the db
-      job_post_a = JobPost.create(
+      job_post_a = FactoryBot.create(:job_post,
         title: "Software Engineer",
         description: "Best job"
       )
 
-      job_post_b = JobPost.create(
+      job_post_b = FactoryBot.create(:job_post,
         title: "Programmer",
         description: "Develop some software"
       )
 
-      job_post_c = JobPost.create(
+      job_post_c = FactoryBot.create(:job_post,
         title: "Web Developer",
         description: "Build cool applications"
       )
+
+      # below was refractored... to above ones
+      # coz we got failure after making the test for job_posts controller
+      # job_post_c = JobPost.create(
+      #   title: "Web Developer",
+      #   description: "Build cool applications"
+      # )
 
       # When
       # Searching for software

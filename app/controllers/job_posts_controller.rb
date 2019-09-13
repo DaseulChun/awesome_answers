@@ -1,10 +1,13 @@
 class JobPostsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create, :destroy]
+
   def new
     @job_post = JobPost.new
   end
 
   def create
     @job_post = JobPost.new job_post_params
+    @job_post.user = current_user
     if @job_post.save
       # redirect_to job_post_path(@job_post)
       # Equivalent to:
@@ -24,9 +27,14 @@ class JobPostsController < ApplicationController
 
   def destroy
     @job_post = JobPost.find(params[:id])
-    @job_post.destroy
-    flash[:danger] = "Job Post destroyed!"
-    redirect_to job_posts_path
+    if can?(:destroy, @job_post)
+      @job_post = JobPost.find(params[:id])
+      @job_post.destroy
+      flash[:danger] = "Job Post destroyed!"
+      redirect_to job_posts_path
+    else
+      redirect_to job_post_path(@job_post) 
+    end
   end
 
   private
@@ -34,4 +42,6 @@ class JobPostsController < ApplicationController
   def job_post_params
     params.require(:job_post).permit(:title, :description, :min_salary, :max_salary, :company_name)
   end
+
+ 
 end
