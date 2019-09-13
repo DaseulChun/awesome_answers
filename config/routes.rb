@@ -35,6 +35,8 @@ Rails.application.routes.draw do
     delete :destroy, on: :collection
   end
   
+  resources :job_posts, only: [:new, :create, :show, :destroy, :index]
+
   # the above will generate the following two routes for answers:
   # question_answers POST/
   # questions:question_id//answers(.:format)

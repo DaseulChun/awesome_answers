@@ -44,6 +44,9 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'cowsay'
   gem 'faker'
+  gem 'rspec-rails'
+  gem 'rails-controller-testing'
+  gem 'factory_bot_rails'
 end
 
 group :development do
