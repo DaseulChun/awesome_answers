@@ -29,10 +29,13 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.find(params[:id])
+    # @question = Question.find(params[:id])
+    
     @answer = Answer.new
 
     @answers = @question.answers.order(created_at: :desc)
+
+    @like = @question.likes.find_by(user: current_user)
   end
 
   def index
@@ -58,6 +61,9 @@ class QuestionsController < ApplicationController
     redirect_to questions_path
   end
 
+  def liked
+    @questions = current_user.liked_questions.order(created_at: :desc)
+  end
 
 
   private

@@ -20,6 +20,8 @@
   <%= flash[:notice] || flash[:alert] %>
 
   <% if user_signed_in? %>
+    <%= link_to 'Liked Questions', liked_questions_path %>
+    |
     Hello <%= current_user.full_name %>,
     <%= link_to "Logout", sessions_path, method: :delete, data: {confirm: "Are you sure you want to log out?"} %>
   <% else %>

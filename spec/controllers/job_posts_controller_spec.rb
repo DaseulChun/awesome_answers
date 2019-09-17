@@ -108,7 +108,7 @@ RSpec.describe JobPostsController, type: :controller do
     @current_user ||= FactoryBot.create(:user)
   end
 
-  describe '#new' do
+  describe '#new' do          
     context 'without signed in user' do
       it "redirects the user to session new" do
         get(:new)

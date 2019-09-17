@@ -1,6 +1,16 @@
 class Question < ApplicationRecord
   belongs_to :user
   has_many :answers, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  # The 'has_many' below depends on the existence of
+  # 'has_many :likes' above. If the above doesn't exist,
+  # you will get an error. Id the one above comes after,
+  # you will also get an error.
+  # has_many :users, through: :likes
+  # we could've wrote like above, 👆
+  # we don't need to write like this (coz no confliction with existing association)
+  # but to make it more clear and readability, we can write like this 👇
+  has_many :likers, through: :likes, source: :user
   
 
   # dependent option: 

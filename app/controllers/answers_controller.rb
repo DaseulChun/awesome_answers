@@ -8,12 +8,11 @@ class AnswersController < ApplicationController
       @answer = Answer.new answer_params
       @answer.user = current_user
       @answer.question = @question
-      if
-      @answer.save
-      redirect_to question_path(@question),
-      notice: 'Answer successfully created!'
+      if @answer.save
+        redirect_to question_path(@question),
+        notice: 'Answer successfully created!'
       else
-          @answers = @questions.answers.order(created_at: :desc)
+          @answers = @question.answers.order(created_at: :desc)
           render 'questions/show'
       end
   end

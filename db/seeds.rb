@@ -9,6 +9,7 @@
 Question.destroy_all
 Answer.destroy_all
 User.destroy_all
+Like.destroy_all
 
 NUM_QUESTIONS = 200
 NUM_USERS = 10
@@ -51,13 +52,16 @@ NUM_QUESTIONS.times do
     q.answers = rand(0..10).times.map do
       Answer.new(body: Faker::GreekPhilosophers.quote, user: users.sample)
     end
+    q.likers = users.shuffle.slice(0, rand(users.count))
   end
 end
 
 questions = Question.all
 answers = Answer.all
+likes = Like.all
 
 puts Cowsay.say("Generated #{questions.count} questions", :frogs)
 puts Cowsay.say("Generated #{answers.count} answers", :stegosaurus)
 puts Cowsay.say("Generated #{users.count} users", :tux)
+puts Cowsay.say("Generated #{likes.count} likes", :cheese)
 puts "Login with #{super_user.email} and password: #{PASSWORD}"
