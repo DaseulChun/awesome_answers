@@ -56,6 +56,8 @@ Rails.application.routes.draw do
   
   resources :job_posts, only: [:new, :create, :show, :destroy, :index]
 
+  match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
+  
   # the above will generate the following two routes for answers:
   # question_answers POST/
   # questions:question_id//answers(.:format)

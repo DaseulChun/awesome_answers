@@ -9,6 +9,9 @@ class AnswersController < ApplicationController
       @answer.user = current_user
       @answer.question = @question
       if @answer.save
+        # AnswerMailer.new_answer(@answer).deliver_now
+        # this will have the job in the queue
+        AnswerMailer.new_answer(@answer).deliver_later
         redirect_to question_path(@question),
         notice: 'Answer successfully created!'
       else
