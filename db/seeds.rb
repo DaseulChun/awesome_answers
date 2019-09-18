@@ -10,9 +10,11 @@ Question.destroy_all
 Answer.destroy_all
 User.destroy_all
 Like.destroy_all
+Tag.destroy_all
 
 NUM_QUESTIONS = 200
 NUM_USERS = 10
+NUM_TAGS = 20
 PASSWORD = "supersecret"
 
 super_user = User.create(
@@ -37,6 +39,14 @@ end
 
 users = User.all
 
+NUM_TAGS.times do
+  Tag.create(
+    name: Faker::ProgrammingLanguage.name
+  )
+end
+
+tags = Tag.all
+
 NUM_QUESTIONS.times do
   created_at = Faker::Date.backward(days: 365 * 5)
   q = Question.create(
@@ -53,6 +63,7 @@ NUM_QUESTIONS.times do
       Answer.new(body: Faker::GreekPhilosophers.quote, user: users.sample)
     end
     q.likers = users.shuffle.slice(0, rand(users.count))
+    q.tags = tags.shuffle.slice(0, rand(tags.count / 2))
   end
 end
 
@@ -64,4 +75,5 @@ puts Cowsay.say("Generated #{questions.count} questions", :frogs)
 puts Cowsay.say("Generated #{answers.count} answers", :stegosaurus)
 puts Cowsay.say("Generated #{users.count} users", :tux)
 puts Cowsay.say("Generated #{likes.count} likes", :cheese)
+puts Cowsay.say("Generated #{tags.count} tags", :kitty)
 puts "Login with #{super_user.email} and password: #{PASSWORD}"

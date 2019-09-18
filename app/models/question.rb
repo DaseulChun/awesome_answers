@@ -4,7 +4,7 @@ class Question < ApplicationRecord
   has_many :likes, dependent: :destroy
   # The 'has_many' below depends on the existence of
   # 'has_many :likes' above. If the above doesn't exist,
-  # you will get an error. Id the one above comes after,
+  # you will get an error. If the one above comes after,
   # you will also get an error.
   # has_many :users, through: :likes
   # we could've wrote like above, 👆
@@ -12,6 +12,11 @@ class Question < ApplicationRecord
   # but to make it more clear and readability, we can write like this 👇
   has_many :likers, through: :likes, source: :user
   
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings#, source: :tag
+  # If the name of the association (i.e. tags) is the same as
+  # the source singularized (i.e. tag) then the source can
+  # be omitted
 
   # dependent option: 
   # 1) nullify : if question is deleted, question ID will be null, but answer will be left
@@ -76,6 +81,32 @@ class Question < ApplicationRecord
       # create them quicker. It takes a name and a lambda as a callback.
 
       scope :recent, -> { order(created_at: :desc).limit(10)}
+
+      def tag_names
+        self.tags.map{ |t| t.name }.join(", ")
+      end
+
+      # Appending an '=' to the end of a method name, 
+      # allows us to implement a 'setter'.
+      # A setter is method that is assignable. 
+
+      # Example
+      # q.tag_names = "stuff, yo"
+
+      # The code in the example above would call the method
+      # 'tag_names' where the value on the right hand side of the 
+      # '=' would become the argument to the method. 
+
+      # This is similar to adding an attr_writer.
+      # Setter
+      def tag_names=(rhs)
+        self.tags = rhs.strip.split(/\s*,\s*/).map do |tag_name|
+          # Finds the first record with the given attribute(s),
+          # or initializes a record(Tag.new) with the attributes
+          # If one is not found
+          Tag.find_or_initialize_by(name: tag_name)
+        end
+      end
 
       private
       # We could also set a default at the db level

@@ -29,8 +29,7 @@ Rails.application.routes.draw do
     # routes that require the parent from those that don't.
     # Routes that require the parent will not change (i.e. index, new, create).
     # Routes that don't require the parent (i.e. show, edit, update,
-    # destroy) will have the parent prefix (i.e. /question/:question_id)
-    # removed
+    # destroy) will have the parent prefix (i.e. /question/:question_id) removed
 
     # Example
     # /questions/1/likes/5 becomes: /likes/5

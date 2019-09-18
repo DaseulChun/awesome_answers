@@ -39,7 +39,18 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @questions = Question.all
+    if params[:tag]
+      # @tag = Tag.find_by(name: params[:tag])
+      # To fix some bug, 
+      # the bug is, @tag will be Nil when we type the url by ourselves
+      # below code won't throw any error 
+      # but with no questions associated with it
+      # just showing the tag itself in the index page
+      @tag = Tag.find_or_initialize_by(name: params[:tag])
+      @questions = @tag.questions.order(created_at: :desc)
+    else
+      @questions = Question.order(created_at: :desc)
+    end
   end
 
   def edit
@@ -70,7 +81,7 @@ class QuestionsController < ApplicationController
 
   def question_params
     #params.require(:question): we must have a question object on the params of this request
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, :tag_names)
   end
 
   def find_question

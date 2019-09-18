@@ -194,6 +194,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    selectize-rails (0.12.6)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -245,6 +246,7 @@ DEPENDENCIES
   rails-controller-testing
   rspec-rails
   sass-rails (~> 5.0)
+  selectize-rails
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data

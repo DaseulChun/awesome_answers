@@ -1,3 +1,11 @@
 <h3>All Questions</h3>
 
+<% if @tag.present? %>
+  <h6>
+    Showing questions tagged by 
+    <span class="badge badge-pill badge-primary">
+      <%= @tag.name %>
+    </span>
+  </h6>
+<% end %>
 <%= render 'list' %>
