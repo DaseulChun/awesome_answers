@@ -22,6 +22,22 @@ Rails.application.routes.draw do
   #delete action lets user delete the question
   # delete '/questions/:id', { to: 'questions#destroy'}
 
+  # The option: 'defaults: {format: :json} will
+  # set 'json' as the default response format for all
+  # routes contained within the block of the namespace.
+  # The namespace method in Rails routes, makes it so
+  # it will automatically look in a directory api, then
+  # a subdirectory v1 for questions controller.
+  namespace :api, defaults: { format: :json } do
+    # /api...
+    namespace :v1 do
+      # /api/v1...
+      resources :questions
+      # /api/v1/questions...
+      resource :session, only: [:create, :destroy]
+    end
+  end
+
   resources :questions do
     resources :answers, only: [:create, :destroy]
     resources :likes, shallow: true, only: [:create, :destroy]

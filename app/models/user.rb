@@ -22,7 +22,7 @@ class User < ApplicationRecord
   # in the join model (Like in this case)
 
 
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true, format: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
   
   def full_name
     "#{first_name} #{last_name}".strip
