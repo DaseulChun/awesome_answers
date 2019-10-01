@@ -1,6 +1,6 @@
 class Api::V1::QuestionsController < Api::ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :find_question, only: [:show, :destroy]
+  before_action :find_question, only: [:show, :destroy, :update, :edit]
 
   def index
     questions = Question.order(created_at: :desc)
@@ -24,6 +24,18 @@ class Api::V1::QuestionsController < Api::ApplicationController
         json: { errors: question.errors }, 
         status: 422 # Unprocessable Entity
       )
+    end
+  end
+
+  def edit
+    
+  end
+
+  def update
+    if @question.update question_params
+      render json: { id: @question.id }
+    else
+      render :edit
     end
   end
 

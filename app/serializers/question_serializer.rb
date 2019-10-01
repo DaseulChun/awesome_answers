@@ -1,4 +1,8 @@
 class QuestionSerializer < ActiveModel::Serializer
+
+  class AnswerSerializer < ActiveModel::Serializer
+    attributes :id, :body, :created_at, :updated_at
+  end
   # This file was generated with:
   # rails g serializer question
 
@@ -26,7 +30,5 @@ class QuestionSerializer < ActiveModel::Serializer
     object.likes.count  
   end
 
-  class AnswerSerializer < ActiveModel::Serializer
-    attributes :id, :body, :created_at, :updated_at
-  end
+  
 end
