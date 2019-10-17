@@ -22,6 +22,7 @@
   <%= link_to "Delete", question_path(@question), method: :delete, data: {confirm: "Are you sure?"} %>
 <% end %>
 
+
 <% if @like.present? && can?(:destroy, @like)%>
   <%= link_to(
         "Unlike",
@@ -38,6 +39,12 @@
 <small>
   (<%= pluralize(@question.likes.count, "like") %>)
 </small>
+
+<% if @question.draft? && can?(:crud, @question) %>
+  <div>
+    <%= link_to "Publish", question_publishings_path(@question), method: :post, class: "btn btn-primary btn-sm" %>
+  </div>
+<% end %>
 
 <%= form_with(model: [@question, @answer], local: true) do |f| %>
   <% if @answer.errors.any? %>

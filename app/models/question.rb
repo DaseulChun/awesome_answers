@@ -82,6 +82,33 @@ class Question < ApplicationRecord
       # create them quicker. It takes a name and a lambda as a callback.
 
       scope :recent, -> { order(created_at: :desc).limit(10)}
+      scope :viewable, -> { where(aasm_state: [:published, :answered, :not_answered]) }
+
+      include AASM
+
+      aasm whiny_transitions: false do
+        state :draft, initial: true
+        state :published
+        state :archived
+        state :answered
+        state :not_answered
+
+        event :publish do
+          transitions from: :draft, to: :published
+        end
+
+        event :answer do
+          transitions from: [:published, :not_answered], to: :answered
+        end
+
+        event :no_answer do
+          transitions from: :published, to: :not_answered
+        end
+
+        event :archive do
+          transitions to: :archived
+        end
+      end
 
       def tag_names
         self.tags.map{ |t| t.name }.join(", ")

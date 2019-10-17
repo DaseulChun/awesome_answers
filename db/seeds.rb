@@ -55,11 +55,14 @@ NUM_QUESTIONS.times do
     title: Faker::Hacker.say_something_smart,
     body: Faker::ChuckNorris.fact,
     view_count: rand(100_000),
+    aasm_state: Question.aasm.states.map(&:name).sample,
+    # Question.aasm.states.map(&:name) is equivalent to:
+    # Question.aasm.states.map { |x| x.name }
     created_at: created_at,
     updated_at: created_at,
     user: users.sample
   )
-
+Question.last(10).pluck(:aasm_state)
   if q.valid?
     q.answers = rand(0..10).times.map do
       Answer.new(body: Faker::GreekPhilosophers.quote, user: users.sample)

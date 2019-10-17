@@ -63,6 +63,7 @@ Rails.application.routes.draw do
   resources :questions do
     resources :answers, only: [:create, :destroy]
     resources :likes, shallow: true, only: [:create, :destroy]
+    resources :publishings, only: :create
     # The `shallow: true` named argument will separate
     # routes that require the parent from those that don't.
     # Routes that require the parent will not change (i.e. index, new, create).
