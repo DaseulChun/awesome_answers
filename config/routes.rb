@@ -87,6 +87,11 @@ Rails.application.routes.draw do
   # resource :session, only: [:new, :create, :destroy]
 
   resources :users, only: [:new, :create, :show]
+  get "/auth/github", as: :sign_in_with_github
+  get "/auth/:provider/callback", to: "callbacks#index"
+  # Above route is like this: 
+  # get "/auth/github/callback", to: "callbacks#index"
+  # get "/auth/twitter/callback", to: "callbacks#index"
 
   resources :sessions, only: [:new, :create] do 
     delete :destroy, on: :collection
