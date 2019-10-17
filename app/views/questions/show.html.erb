@@ -1,6 +1,7 @@
 <h3>Show Page</h3>
 
 <h1><%= @question.title %></h1>
+<%= image_tag @question.image.variant(resize: '500X500') if @question.image.attached? %>
 <p><%= @question.body %></p>
 <p>
   Tags: 

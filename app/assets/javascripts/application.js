@@ -17,4 +17,6 @@
 //= require rails-ujs
 //= require activestorage
 //= require selectize
+//= require underscore
+//= require gmaps/google
 //= require_tree .

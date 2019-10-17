@@ -18,6 +18,7 @@ class Question < ApplicationRecord
   # the source singularized (i.e. tag) then the source can
   # be omitted
 
+  has_one_attached :image
   # dependent option: 
   # 1) nullify : if question is deleted, question ID will be null, but answer will be left
   # 2) destroy : if question is deleted, all the answers will be deleted

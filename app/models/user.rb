@@ -20,7 +20,8 @@ class User < ApplicationRecord
     # the other end of the association.
   # Note: the `source` option has to match a `belongs_to` association 
   # in the join model (Like in this case)
-
+  geocoded_by :address
+  after_validation :geocode
 
   validates :email, presence: true, uniqueness: true, format: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
   

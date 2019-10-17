@@ -86,7 +86,7 @@ class QuestionsController < ApplicationController
 
   def question_params
     #params.require(:question): we must have a question object on the params of this request
-    params.require(:question).permit(:title, :body, :tag_names)
+    params.require(:question).permit(:title, :body, :tag_names, :image)
   end
 
   def find_question

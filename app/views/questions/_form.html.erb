@@ -1,4 +1,4 @@
-#  why using the @question instead of Question.new?
+<%# #  why using the @question instead of Question.new?
 #  Specific Situation
 #  When failed to create a new question
 #  It will hit the line in the question contoller 
@@ -6,7 +6,7 @@
 #  It doesn't hit the questions#new again, 
 #  instead, it will just render the view>questions>new
 #  by @question, it will carry all the infos 
-#  that user tried to create but failed
+#  that user tried to create but failed %>
 
 <% if @question.errors.any? %>
     <ul>
@@ -20,13 +20,16 @@
 
 <%= form_for @question do |f|%>
 
-<div>
+<div class="form-group">
 <%= f.label :title %>
 <%= f.text_field :title %>
 </div>
-<div>
+<div class="form-group">
 <%= f.label :body %>
 <%= f.text_field :body %>
+</div>
+<div class="form-group"> 
+<%= f.file_field :image %>
 </div>
 <div class="form-group">
   <%= f.label :tag_names %>
