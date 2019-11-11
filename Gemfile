@@ -49,6 +49,8 @@ gem 'gmaps4rails'
 gem 'underscore-rails'
 gem 'omniauth-github'
 gem 'aasm'
+gem 'stripe'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -60,6 +62,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'nyan-cat-formatter'
   gem 'letter_opener'
+  gem "rails-erd"
 end
 
 group :development do

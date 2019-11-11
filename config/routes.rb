@@ -87,7 +87,12 @@ Rails.application.routes.draw do
 
   # resource :session, only: [:new, :create, :destroy]
 
-  resources :users, only: [:new, :create, :show]
+  resources :users, shallow: true, only: [:new, :create, :show] do
+    resources :gifts, only: [:new, :create] do
+      resources :payments, only: [:new, :create]
+    end
+  end
+
   get "/auth/github", as: :sign_in_with_github
   get "/auth/:provider/callback", to: "callbacks#index"
   # Above route is like this: 

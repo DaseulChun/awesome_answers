@@ -15,7 +15,7 @@
       ) %>
   <% end %>
 </p>
-<p>Asked by: <%= @question.user&.full_name || 'DELETED' %></p>
+<p>Asked by: <%= link_to @question.user&.full_name || 'DELETED', @question.user  %></p>
 
 <% if can?(:crud, @question) %>
   <%= link_to "Edit", edit_question_path(@question) %>
